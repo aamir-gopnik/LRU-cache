@@ -3,7 +3,7 @@ public class DoublyLinkedList<E> {
     Node front;
     Node back;
     int size = 0;
-    class Node {
+    class Node<E> {
         E data;
         Node prev;
         Node next;
@@ -52,7 +52,7 @@ public class DoublyLinkedList<E> {
         }
         if(back.next != null)
         {
-            E data = back.data;
+            E data = (E) back.data;
             back = back.next;
             return data;
         }
@@ -72,14 +72,14 @@ public class DoublyLinkedList<E> {
         {
             back = node.next;
             node.prev = null;
-            insertElement(temp.data);
+            insertElement((E) temp.data);
             return;
 
         }
         node.prev.next = node.next;
         node.next.prev = node.prev;
         size--;
-        insertElement(temp.data);
+        insertElement((E) temp.data);
     }
 
 

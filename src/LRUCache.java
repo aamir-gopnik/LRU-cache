@@ -1,14 +1,14 @@
 import java.util.HashMap;
 
-public class LRUCache {
+public class LRUCache<KEY> {
 
     private static final int CACHE_SIZE = 4;
-    private HashMap<Integer,DoublyLinkedList.Node> lruCache;
+    private HashMap<KEY,DoublyLinkedList.Node> lruCache;
     private DoublyLinkedList dll;
 
     public LRUCache(){
         lruCache = new HashMap<>(CACHE_SIZE);
-        dll = new DoublyLinkedList();
+        dll = new DoublyLinkedList<KEY>();
     }
 
 
@@ -26,7 +26,7 @@ public class LRUCache {
     }
 
     // Function will be called when Data is Requested from Cache
-    public int getdata(int requestedData)
+    public KEY getdata(KEY requestedData)
     {
         if(lruCache.containsKey(requestedData)){
             System.out.println("Data present in cache -> Moving to Front of Cache " + requestedData);
@@ -49,7 +49,6 @@ public class LRUCache {
                 else
                 {
                     System.out.println("CACHE NOT FULL, INSERTING IN CACHE");
-                    System.out.println(lruCache.size());
                     DoublyLinkedList.Node tailNode = dll.insertElement(requestedData);
                     lruCache.put(requestedData,tailNode);
                 }
