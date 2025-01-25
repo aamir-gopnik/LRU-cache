@@ -12,44 +12,44 @@ public class LRUCache {
     }
 
 
-    // we will use the above created doubly linked list for LRU implementation
-    // head -> mid -> tail
-    // new element will be inserted into tail and head element will get removed.
+    // We will use the above created doubly linked list for LRU implementation
+    // back -> mid -> front
+    // new element will be inserted into front and element from back will get removed.
     // all the elements of linked list will be present in HashMap also.
+    // In case of Cache Hit -> element will be moved to front of Linked List
 
     public void printCacheContent(){
         if(dll.size > 0)
         {
-            /*lruCache.entrySet().stream().forEach(set ->
-            {
-                System.out.print(set.getValue().data + " ");
-            });
-            System.out.println();*/
             dll.printElements();
         }
     }
 
+    // Function will be called when Data is Requested from Cache
     public int getdata(int requestedData)
     {
         if(lruCache.containsKey(requestedData)){
-            System.out.println("Data present in cache -> " + requestedData);
+            System.out.println("Data present in cache -> Moving to Front of Cache " + requestedData);
             DoublyLinkedList.Node currentNode = lruCache.get(requestedData);
-            dll.moveToTail(currentNode);
+            dll.moveToFront(currentNode);
             return requestedData;
         }
         else
             {
                 //considering that data is present in persistence or main source
-                System.out.println("Data NOT present in cache -> " + requestedData);
+                System.out.println("Data NOT present in cache -> Inserting to Front of Cache " + requestedData);
 
-                if(lruCache.size() > CACHE_SIZE)
+                if(lruCache.size() >= CACHE_SIZE)
                 {
+                    System.out.println("CACHE SIZE FULL, EVICTING LEAST RECENTLY USED ELEMENT");
                     dll.removeElement();
-                    DoublyLinkedList.Node tailNode = dll.insertElement(requestedData);
-                    lruCache.put(requestedData,tailNode);
+                    DoublyLinkedList.Node newFrontNode = dll.insertElement(requestedData);
+                    lruCache.put(requestedData,newFrontNode);
                 }
                 else
                 {
+                    System.out.println("CACHE NOT FULL, INSERTING IN CACHE");
+                    System.out.println(lruCache.size());
                     DoublyLinkedList.Node tailNode = dll.insertElement(requestedData);
                     lruCache.put(requestedData,tailNode);
                 }

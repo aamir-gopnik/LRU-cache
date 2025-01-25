@@ -21,6 +21,15 @@ public class MainLRUcache {
         lruCache.getdata(3);
         lruCache.printCacheContent();
 
+        lruCache.getdata(8);
+        lruCache.printCacheContent();
+
+        lruCache.getdata(12);
+        lruCache.printCacheContent();
+
+        lruCache.getdata(4);
+        lruCache.printCacheContent();
+
 
     }
 }

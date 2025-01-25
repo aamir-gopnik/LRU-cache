@@ -1,78 +1,78 @@
-public class DoublyLinkedList {
+public class DoublyLinkedList<E> {
     private static final int LL_SIZE = 4;
-    static Node head;
-    static Node tail;
+    Node front;
+    Node back;
     int size = 0;
-    static class Node {
-        int data;
+    class Node {
+        E data;
         Node prev;
         Node next;
-        public Node(int value){
+        public Node(E value){
             this.data = value;
         }
     }
 
-    //insertion will at tail only (Order of insert)
-    public Node insertElement(int value){
+    //insertion will at front only (Order of insert)
+    public Node insertElement(E value){
         Node newNode = new Node(value);
-        if(tail == null)
+        if(front == null)
         {
-            head = tail = newNode;
+            front = back = newNode;
             size++;
-            return tail;
+            return front;
         }
-            newNode.prev = tail;
+            newNode.prev = front;
             newNode.prev.next = newNode;
             if(size < LL_SIZE) {
                 size++;
             }
             else {
-                head = head.next;
+                front = front.next;
             }
-            return tail = newNode;
+            return front = newNode;
         }
 
     public void printElements()
     {
-        Node temp = head;
+        Node temp = back;
+        System.out.print("B -> ");
         while(temp != null){
             System.out.print(temp.data + " ");
             temp = temp.next;
         }
+        System.out.print(" <- F");
         System.out.println();
     }
 
-    //removal will from head only (Order of insert)
-    public int removeElement(){
-        if(head == null)
+    //removal will be done from back only (Order of insert)
+    public E removeElement(){
+        if(back == null)
         {
-            return -1;
+            System.out.println("Exception: Data not found for removal");
         }
-        if(head.next != null)
+        if(back.next != null)
         {
-            int data = head.data;
-            head = head.next;
+            E data = back.data;
+            back = back.next;
             return data;
         }
         size--;
-        return -1;
+        return null;
     }
 
-    //Move element to tail when cache accessed
-    public void moveToTail(Node node)
+    //Move element to Front when cache accessed
+    public void moveToFront(Node node)
     {
-        if(tail == node)
+        if(front == node)
         {
             return;
         }
         Node temp = node;
-        if(head == node)
+        if(back == node)
         {
-            node.prev = tail;
-            tail.next = node;
-            tail = node;
-            head = head.next;
-            node.next = null;
+            back = node.next;
+            node.prev = null;
+            insertElement(temp.data);
             return;
 
         }
