@@ -1,3 +1,5 @@
+package LRUScratch;
+
 public class DoublyLinkedList<E> {
     private static final int LL_SIZE = 4;
     Node front;

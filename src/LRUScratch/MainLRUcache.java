@@ -1,3 +1,5 @@
+package LRUScratch;
+
 public class MainLRUcache {
 
     public static void main(String[] args) {
